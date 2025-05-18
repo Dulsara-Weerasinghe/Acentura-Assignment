@@ -3,6 +3,7 @@ package com.example.eventManagement.entity;
 import com.example.eventManagement.enums.EventVisibilityType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,12 +13,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "events")  // Optional: specify table name
+@Table(name = "EVENTS")
+@Builder
 public class Event {
 
   @Id
-  @Column(name = "ID", nullable = false, unique = true, length = 64)
-  private String id;
+  @Column(name = "EVENT_ID", nullable = false, unique = true)
+  private String eventId;
 
   @Column(name = "TITLE", nullable = false, length = 255)
   private String title;
@@ -25,8 +27,13 @@ public class Event {
   @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
   private String description;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "HOST_ID")
+  // Soft delete flag
+  @Column(name = "IS_ARCHIVED", nullable = false)
+  private boolean archived = false;
+
+//  An event is hosted by one user → Many-to-One with User
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @JoinColumn(name = "HOST_ID", referencedColumnName = "ID")
   private User hostId;
 
   @Column(name = "START_TIME", nullable = false)
@@ -48,7 +55,8 @@ public class Event {
   @Column(name = "UPDATED_AT")
   private LocalDateTime updatedAt;
 
-  @PrePersist
+
+    @PrePersist
   protected void onCreate() {
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();

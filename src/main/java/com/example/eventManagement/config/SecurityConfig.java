@@ -39,9 +39,7 @@ public class SecurityConfig {
 
         httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/authenticate").permitAll() //Allow anyone (without login) to access the /auth/authenticate API (like  login endpoint).
-                        .requestMatchers("/api/v1/books/availableBooks").authenticated() //check availble books API dont need to authenticate , anyone can view
-                        .anyRequest().authenticated() //All other APIs (except /auth/authenticate) must have a valid JWT token.
+                        .anyRequest().authenticated() //All  APIs  must have a valid JWT token.
                 )
                 .addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

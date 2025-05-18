@@ -1,6 +1,7 @@
 package com.example.eventManagement.repository;
 
 import com.example.eventManagement.entity.Event;
+import com.example.eventManagement.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -15,13 +16,17 @@ import java.util.UUID;
 public interface EventRepository extends CrudRepository<Event, String> {
 
 
-    @Query(value = "select  e from Event e where e.createdAt=:date and e.location=:location and e.visibility=:visible ")
+    @Query(value = "select  e from Event e where e.createdAt=:date and e.location=:location and e.visibility=:visible and e.archived=false ")
     List<Event> getList(@Param("date")LocalDateTime date, @Param("location")String location,@Param("visible")String visible);
 
-    @Query("SELECT e FROM Event e WHERE e.startTime >= :now")
+    @Query("SELECT e FROM Event e WHERE e.startTime >= :now and e.archived=false ")
    Page<Event> findUpcomingEvents(@Param("now") LocalDateTime now, Pageable pageable);
 
-    List<Event> findByHostId(String userId);
+    List<Event> findByhostId(User userId);
 
 
+
+
+
+    Optional<Event> findByEventId(String eventId);
 }

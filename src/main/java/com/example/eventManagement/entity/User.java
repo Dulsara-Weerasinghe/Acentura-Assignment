@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "`user`")
 public class User {
 
   @Id
-  @Column(name = "id", nullable = false, unique = true)
+  @Column(name = "ID", nullable = false, unique = true)
   private String id;
 
   @Column(name = "name", nullable = false, length = 100)

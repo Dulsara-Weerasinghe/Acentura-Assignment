@@ -2,6 +2,7 @@ package com.example.eventManagement.service;
 
 import com.example.eventManagement.dto.*;
 import com.example.eventManagement.exception.DataNotFounException;
+import com.example.eventManagement.exception.NotFoundException;
 import com.example.eventManagement.exception.ResourceNotFoundException;
 
 import java.util.List;
@@ -9,19 +10,21 @@ import java.util.Map;
 
 public interface EventService {
 
-    String createEvent(CreateEventRequest createEventRequest);
+    String createEvent(CreateEventRequest createEventRequest,String userName);
 
-    ResponseBean updateTask(UpdateEvent updateEvent, String eventId) throws DataNotFounException;
+    ResponseBean updateTask(UpdateEvent updateEvent, String eventId,String userName) throws DataNotFounException, NotFoundException;
 
-    ResponseBean deleteEvent(String eventId);
+    ResponseBean deleteEvent(String eventId,String userName);
 
-    ResponseBean filterEvents(FilterEvents filterEvents);
+    ResponseBean filterEvents(EventFilterCriteria filterEvents);
 
     ResponseBean upcomingEvents(UpcomingEventsRequest upcomingEventsRequest);
 
-    String checkEventId(String eventId) throws ResourceNotFoundException;
+    ResponseBean checkEventId(String eventId) throws ResourceNotFoundException;
 
-    Map<String, List<EventDto>> getUserHostedAndAttendingEvents(String userId);
+    Map<String, List<EventDto>> getUserHostedAndAttendingEvents(String userId) throws NotFoundException;
 
-    EventDetailsResponse getEventDetails(String id) throws ResourceNotFoundException;
+    ResponseBean getEventDetails(String id) throws ResourceNotFoundException;
+
+
 }
