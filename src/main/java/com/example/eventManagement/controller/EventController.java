@@ -28,7 +28,7 @@ import java.util.Map;
 @Slf4j
 public class EventController {
 
-    private final MessageSource messageSource;
+
 
     private final MessageVarList messageVarList;
     private final EventService eventService;
@@ -45,14 +45,14 @@ public class EventController {
             String userName = authentication.getName();
             String eventId = eventService.createEvent(requestBody,userName);
             if (!eventId.isEmpty() && eventId != null) {
-                return new ResponseBean(MessageVarList.RSP_SUCCESS, StatusVarList.SUCCESS, eventId);
+                return new ResponseBean(messageVarList.RSP_SUCCESS, StatusVarList.SUCCESS, eventId);
             } else {
-                return new ResponseBean(MessageVarList.RSP_NO_DATA_FOUND, StatusVarList.FAILED, null);
+                return new ResponseBean(messageVarList.RSP_NO_DATA_FOUND, StatusVarList.FAILED, null);
             }
 
         } catch (Exception e) {
 
-            return new ResponseBean(MessageVarList.RSP_NOT_AUTHORISED, StatusVarList.EXCEPTION_OCCURED, null);
+            return new ResponseBean(messageVarList.RSP_NOT_AUTHORISED, StatusVarList.EXCEPTION_OCCURED, null);
         }
     }
 
@@ -119,9 +119,9 @@ public class EventController {
         Map<String, List<EventDto>> events = eventService.getUserHostedAndAttendingEvents(userId);
 
         if (!events.isEmpty()) {
-            return new ResponseBean(MessageVarList.RSP_SUCCESS, StatusVarList.SUCCESS, events);
+            return new ResponseBean(messageVarList.RSP_SUCCESS, StatusVarList.SUCCESS, events);
         } else {
-            return new ResponseBean(MessageVarList.RSP_NO_DATA_FOUND, StatusVarList.FAILED, null);
+            return new ResponseBean(messageVarList.RSP_NO_DATA_FOUND, StatusVarList.FAILED, null);
         }
     }
 

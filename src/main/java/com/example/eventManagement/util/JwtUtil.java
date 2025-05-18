@@ -18,15 +18,6 @@ public class JwtUtil {
 
     private static final long JWT_TOKEN_VALIDITY = 5*60*60;
 
-//    public static String generateToken(UserDetails userDetails) {
-//        return Jwts.builder()
-//                .claim("username", username)
-//                .claim("role", role)
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
-//                .signWith(SignatureAlgorithm.HS256, secretKey)
-//                .compact();
-//    }
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
