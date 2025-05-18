@@ -1,6 +1,6 @@
 package com.example.eventManagement.service.impl;
 
-import com.example.domain.*;
+
 import com.example.eventManagement.domain.*;
 import com.example.eventManagement.dto.*;
 import com.example.eventManagement.entity.Event;
